@@ -23,7 +23,6 @@ function ExtendedDevice() {
     channel.onCordovaReady.subscribe(function () {
         if(cordova.platformId === 'android') {
             me.getInfo(function(info){
-                console.log('Device Data', info);
                 me.memory = info.memory || 'unknown';
                 me.cpumhz = info.cpumhz || 'unknown';
                 me.totalstorage = info.totalstorage || 'unknown';
