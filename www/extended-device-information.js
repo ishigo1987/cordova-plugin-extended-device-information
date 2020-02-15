@@ -4,8 +4,6 @@ var argscheck = require('cordova/argscheck'),
     exec = require('cordova/exec'),
     cordova = require('cordova');
 
-channel.createSticky('onCordovaInformationReady');
-channel.waitForInitialization('onCordovaInformationReady');
 
 /**
  * This represents the mobile device, and provides properties for inspecting the model, version, UUID of the
@@ -20,21 +18,7 @@ function ExtendedDevice() {
 
     var me = this;
     
-    
-    
-}
-/* remove from this line
-/**
- * Get device info
- *
- * @param {Function} successCallback The function to call when the heading data is available
- * @param {Function} errorCallback The function to call when there is an error getting the heading data. (OPTIONAL)
- */
-ExtendedDevice.prototype.getInfo = function (successCallback, errorCallback) {
-    argscheck.checkArgs('fF', 'ExtendedDevice.getInfo', arguments);
-    exec(successCallback, errorCallback, "ExtendedDevice", "getExtendedDeviceInfo", []);
-};
-channel.onCordovaReady.subscribe(function () {
+    channel.onCordovaReady.subscribe(function () {
         if(cordova.platformId === 'android') {
             me.getInfo(function(info){
                 me.memory = info.memory || 'unknown';
@@ -49,5 +33,22 @@ channel.onCordovaReady.subscribe(function () {
             channel.onCordovaInformationReady.fire();
         }
     });
+    
+}
+/* remove from this line
+/**
+ * Get device info
+ *
+ * @param {Function} successCallback The function to call when the heading data is available
+ * @param {Function} errorCallback The function to call when there is an error getting the heading data. (OPTIONAL)
+ */
+ExtendedDevice.prototype.getInfo = function (successCallback, errorCallback) {
+    argscheck.checkArgs('fF', 'ExtendedDevice.getInfo', arguments);
+    exec(successCallback, errorCallback, "ExtendedDevice", "getExtendedDeviceInfo", []);
+    channel.createSticky('onCordovaInformationReady');
+    channel.waitForInitialization('onCordovaInformationReady');
+
+};
+
 
 module.exports = new ExtendedDevice();
