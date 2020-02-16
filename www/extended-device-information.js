@@ -10,7 +10,20 @@ var argscheck = require('cordova/argscheck'),
  * phone, etc.
  * @constructor
  */
-function ExtendedDevice() {
+
+/* remove from this line
+/**
+ * Get device info
+ *
+ * @param {Function} successCallback The function to call when the heading data is available
+ * @param {Function} errorCallback The function to call when there is an error getting the heading data. (OPTIONAL)
+ */
+ExtendedDevice.prototype.getInfo = function (successCallback, errorCallback) {
+    argscheck.checkArgs('fF', 'ExtendedDevice.getInfo', arguments);
+    exec(successCallback, errorCallback, "ExtendedDevice", "getExtendedDeviceInfo", []);
+    channel.createSticky('onCordovaInformationReady');
+    channel.waitForInitialization('onCordovaInformationReady');
+    function ExtendedDevice() {
     this.memory = null;
     this.cpumhz = null;
     this.totalstorage = null;
@@ -35,18 +48,6 @@ function ExtendedDevice() {
     });
     
 }
-/* remove from this line
-/**
- * Get device info
- *
- * @param {Function} successCallback The function to call when the heading data is available
- * @param {Function} errorCallback The function to call when there is an error getting the heading data. (OPTIONAL)
- */
-ExtendedDevice.prototype.getInfo = function (successCallback, errorCallback) {
-    argscheck.checkArgs('fF', 'ExtendedDevice.getInfo', arguments);
-    exec(successCallback, errorCallback, "ExtendedDevice", "getExtendedDeviceInfo", []);
-    channel.createSticky('onCordovaInformationReady');
-    channel.waitForInitialization('onCordovaInformationReady');
 
 };
 
